@@ -1,0 +1,203 @@
+Acitivity Selection:
+
+#include <bits/stdc++.h>
+using namespace std;
+class activity
+{
+public:
+    string order_no;
+    int start;
+    int finish;
+};
+
+void bubbleSort(activity arr[], int n)
+{
+    int i, j;
+    for (i = 0; i < n - 1; i++)
+    {
+
+        for (j = 0; j < n - i - 1; j++)
+        {
+            if (arr[j].finish > arr[j + 1].finish)
+                swap(arr[j], arr[j + 1]);
+        }
+    }
+}
+void activity_selection(activity arr[],int n){
+    bubbleSort(arr,n);
+    int i=0;
+    cout<<"By optimization, activities selected are:\n";
+    for(int j=1;j<n;j++){
+        if(arr[j].finish>=arr[i].start){
+            cout<<arr[j].order_no<<" "<<arr[j].start<<" "<<arr[j].finish<<"\n";
+           i++; 
+        }
+        
+    }
+}
+
+int main()
+{
+    int n;
+    cout << "enter the number of activities:\t";
+    cin >> n;
+    activity arr[n];
+    for (int i = 0; i < n; i++)
+    {
+        cout << "Enter the activity no. ,start and end time of activity"<<" "<<i<<":\t";
+        cin >> arr[i].order_no >> arr[i].start >> arr[i].finish;
+    }
+    bubbleSort(arr, n);
+    activity_selection(arr,n);
+    return 0;
+
+*-----------------------------------------------------------------------------------------------------------------------------------------*
+
+fractional Knapsack:
+
+#include<bits/stdc++.h>
+using namespace std;
+class frac{
+    public:
+    string El;
+    float wght;
+    float prof;
+    float ppw;
+    };
+void unitdiv(frac arr[],int n){
+  int i;
+  for (i=0;i<n;i++){
+   arr[i].ppw=arr[i].prof/arr[i].wght;
+  }
+}
+void bubblesort(frac arr[],int n){
+ int i, j;
+    for (i = 0; i < n - 1; i++)
+    {
+
+        for (j = 0; j < n - i - 1; j++)
+        {
+            if (arr[j].ppw < arr[j + 1].ppw)
+                swap(arr[j], arr[j + 1]);
+        }
+    }
+
+}
+
+
+void bag(frac arr[], int n ,int c){
+    float proff=0;
+    int i;
+    cout<<"The elements used are:"<<"\n";
+    for(i=0;i<n;i++){
+        if(c>=arr[i].wght){
+            proff+=arr[i].prof;
+            c-=arr[i].wght;
+        }
+        else
+        {break;
+          }
+        cout<<arr[i].El<<" "<<arr[i].wght<<" "<<arr[i].prof<<"\n";  
+        }
+    if(c!=0){
+        cout<<"Fractional element is :"<<" "<<arr[i].El<<" "<<arr[i].wght<<" "<<arr[i].prof<<"\n";
+        proff+=(c/arr[i].wght)*arr[i].prof;
+    
+    }
+    cout<<"Max profit is:"<<proff<<endl;
+} 
+int main(){
+    int n;
+    int c;
+    cout<<"Enter the capacity of bag:"<<" ";
+    cin>>c;
+    cout<<"Enter the number of elements:"<<" ";
+    cin>>n;
+    frac arr[n];
+    for(int i=0;i<n;i++){
+         cout << "Enter the Element no.,weight and profit of each element"<<" "<<i<<":\t";
+        cin >> arr[i].El >> arr[i].wght >> arr[i].prof;
+    }
+     unitdiv(arr,n);
+     bubblesort(arr,n);
+     bag(arr,n,c);
+  
+
+    return 0;
+}
+*---------------------------------------------------------------------------------------------------------------------------------------*
+
+job selection:
+
+#include<bits/stdc++.h>
+using namespace std;
+class Job{
+public:
+string jb;
+int deadline;
+float prof;
+};
+void bubblesort(Job arr[],int n){
+ int i, j;
+    for (i = 0; i < n - 1; i++)
+    {
+        for (j = 0; j < n - i - 1; j++)
+        {
+            if (arr[j].prof < arr[j + 1].prof)
+                swap(arr[j], arr[j + 1]);
+        }
+    }
+
+}
+
+void Jobscheduling(Job arr[], int n){
+int result[n]; 
+    bool slot[n];  
+ 
+    for (int i=0; i<n; i++)
+        slot[i] = false;
+ 
+    
+    for (int i=0; i<n; i++)
+    {
+        for (int j=min(n, arr[i].deadline)-1; j>=0; j--)
+       {
+            if (slot[j]==false)
+          {
+             result[j] = i;  
+             slot[j] = true; 
+             break;
+          }
+       }
+    }
+ 
+    int sum=0;
+    cout<<"The sequence formed for max profit is:\n";
+    for (int i=0; i<n; i++){
+       if (slot[i]){
+           sum+=arr[slot[i]].prof;
+         cout <<arr[result[i]].jb<< " ";}
+         
+}
+        cout<<"\nProfit earned is:"<<sum;
+}
+ 
+ 
+     
+ 
+int main(){
+    int n;
+    cout<<"Enter the number of elements:"<<" ";
+    cin>>n;
+    Job arr[n];
+    for(int i=0;i<n;i++){
+         cout << "Enter the Job no.,Deadline and profit of job"<<" "<<i<<":\t";
+        cin >> arr[i].jb >> arr[i].deadline >> arr[i].prof;
+    }
+    bubblesort(arr,n);
+    Jobscheduling(arr,n);
+
+    return 0;
+}
+
+}
